@@ -1,6 +1,8 @@
 package Config;
 
 import java.sql.*;
+import java.util.List;
+import java.util.Map;
 
 public class config {
     public static Connection con = null;
@@ -147,5 +149,9 @@ public class config {
             System.out.println("Error hashing password: " + e.getMessage());
             return null;
         }
+    }
+
+    public List<Map<String, Object>> executeUpdate(String qry, String regEmail) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

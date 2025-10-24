@@ -36,7 +36,7 @@ public class main {
 
                 switch (choice) {
 
-                    case 1 -> {
+                    case 1: 
                         System.out.print("Enter Email: ");
                         String email = sc.nextLine();
                         System.out.print("Enter Password: ");
@@ -69,13 +69,13 @@ public class main {
                                         sc.nextLine();
 
                                         switch (adminChoice) {
-                                            case 1 -> {
+                                            case 1:
                                                 String pendingQuery = "SELECT * FROM tbl_users WHERE Status = 'Pending'";
                                                 String[] headers = {"Customer_ID", "Name", "Email", "Role", "Status"};
                                                 String[] columns = {"Customer_ID", "Name", "Email", "Role", "Status"};
                                                 database.viewRecords(pendingQuery, headers, columns);
-                                            }
-                                            case 2 -> {
+                                            
+                                            case 2:
                                                 System.out.print("Enter Customer_ID to Approve: ");
                                                 int approveId = sc.nextInt();
                                                 sc.nextLine();
@@ -84,13 +84,16 @@ public class main {
                                                 database.updateRecord(updateSQL, "Approved", approveId);
 
                                                 System.out.println("✅ Account with ID " + approveId + " has been approved!");
-                                            }
-                                            case 3 -> viewUsers();
-                                            case 4 -> {
+                                            
+                                            case 3:
+                                                viewUsers();
+                                                break;
+                                            case 4: 
                                                 System.out.println("Logging out...");
                                                 exitAdmin = true;
-                                            }
-                                            default -> System.out.println("Invalid choice. Try again.");
+                                            
+                                            default:
+                                              System.out.println("Invalid choice. Try again.");
                                         }
                                     }
                                 }
@@ -100,26 +103,28 @@ public class main {
                                 }
                             }
                         }
-                    }
+                    
 
-                    case 2 -> {
+                    case 2:
                         config con = new config();
 
                         System.out.print("Enter Your Name: ");
                         String name = sc.nextLine();
 
                         String regEmail;
-                        while (true) {
-                            System.out.print("Enter User Email: ");
-                            regEmail = sc.nextLine();
+                       while (true) {
+                        System.out.print("Enter User Email: ");
+                        regEmail = sc.nextLine();
 
-                            String qry = "SELECT * FROM tbl_users WHERE Email = ?";
-                            java.util.List<java.util.Map<String, Object>> result = con.fetchRecords(qry, regEmail);
+                         qry = "SELECT * FROM users WHERE Email = ?";
+                         java.util.List<java.util.Map<String, Object>> intresult =
+                         con.fetchRecords(qry, regEmail);
 
-                            if (result.isEmpty()) {
-                                break;
-                            } else {
+
+                            if (!intresult.isEmpty()) {
                                 System.out.println("Email already exists, please enter another.");
+                            } else {
+                                break;
                             }
                         }
 
@@ -132,15 +137,16 @@ public class main {
                         System.out.print("Enter Role (1 - Admin / 2 - Customer): ");
                         String roleInput = sc.nextLine();
                         switch (roleInput) {
-                            case "1" -> {
+                            case "1" :
                                 role = "Admin";
                                 break OUTER;
-                                }
-                            case "2" -> {
+                                
+                            case "2" :
                                 role = "Customer";
                                 break OUTER;
-                                }
-                            default -> System.out.println("Invalid input! Please enter 1 or 2.");
+                                
+                            default:
+                            System.out.println("Invalid input! Please enter 1 or 2.");
                         }
                     }
 
@@ -153,19 +159,18 @@ public class main {
 
                         String status = "Pending";
 
-                        String insertSQL = """
-                            INSERT INTO tbl_users 
-                            (Name, Email, Password, Contact_numb, Role, Address, Status) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?)
-                            """;
+                      String insertSQL = "INSERT INTO tbl_users (Name, Email, Password, Contact_numb, Role, Address, Status)"
+
+                           + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                            
 
                         con.addRecord(insertSQL, name, regEmail, hashedPassword, cnumber, role, address, status);
                         System.out.println("Registration successful! Please wait for Admin approval.");
-                    }
+                    
 
-                    case 3 -> viewUsers();
+                    case 3: viewUsers();
 
-                    case 4 -> {
+                    case 4:
                         System.out.print("Enter Customer_ID: ");
                         int id = sc.nextInt();
                         sc.nextLine();
@@ -185,10 +190,10 @@ public class main {
                         database.updateRecord(sqlUpdate, uname, uemail, unumber, urole, upass, id);
 
                         System.out.println("User updated successfully!");
-                    }
+                    
 
                     // ------------------ DELETE USER ------------------
-                    case 5 -> {
+                    case 5: 
                         System.out.print("Enter Customer_ID to DELETE: ");
                         int deleteId = sc.nextInt();
 
@@ -196,14 +201,15 @@ public class main {
                         database.deleteRecord(sqlDelete, deleteId);
 
                         System.out.println("User deleted successfully!");
-                    }
+                    
 
-                    case 6 -> {
+                    case 6:
                         System.out.println("Exiting program...");
                         System.exit(0);
-                    }
+                    
 
-                    default -> System.out.println("Invalid choice. Please try again.");
+                    default:
+                       System.out.println("Invalid choice. Please try again.");
                 }
 
                 if (choice != 6) {
