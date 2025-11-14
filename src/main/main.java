@@ -6,7 +6,8 @@ import java.util.Scanner;
 public class main {
 
     public static void viewUsers() {
-        String query = "SELECT * FROM tbl_users";
+        config db = new config();
+        String votersQuery = "SELECT * FROM tbl_users";
         String[] headers = {"Customer_ID", "Name", "Email", "Contact_numb", "Role", "Address", "Status"};
         String[] columns = {"Customer_ID", "Name", "Email", "Contact_numb", "Role", "Address", "Status"};
 
@@ -70,12 +71,14 @@ public class main {
 
                                         switch (adminChoice) {
                                             case 1:
+                                                
                                                 String pendingQuery = "SELECT * FROM tbl_users WHERE Status = 'Pending'";
                                                 String[] headers = {"Customer_ID", "Name", "Email", "Role", "Status"};
                                                 String[] columns = {"Customer_ID", "Name", "Email", "Role", "Status"};
                                                 database.viewRecords(pendingQuery, headers, columns);
                                             
                                             case 2:
+                                                
                                                 System.out.print("Enter Customer_ID to Approve: ");
                                                 int approveId = sc.nextInt();
                                                 sc.nextLine();
@@ -86,9 +89,11 @@ public class main {
                                                 System.out.println("✅ Account with ID " + approveId + " has been approved!");
                                             
                                             case 3:
+                                                
                                                 viewUsers();
                                                 break;
                                             case 4: 
+                                                
                                                 System.out.println("Logging out...");
                                                 exitAdmin = true;
                                             
